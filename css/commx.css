@@ -130,7 +130,8 @@ button[type="button"].abtn_{border:0 none;background:transparent;}
 	border: 0 none;
 	background-color: white;
 }
-#header .function button[type="button"] span{display:block;width:30px;height:30px;background-color:red}
+#header .function button[type="button"] span{display:block;width:30px;height:30px;margin:0 0 0 5px;background-color:red;text-indent:-9999em}
+#header .function button[type="button"][aria-expanded="true"] span{background-color:aquamarine;}
 
 #header .function button[type="button"].on {
 	background-color: red;
@@ -178,12 +179,14 @@ button[type="button"].abtn_{border:0 none;background:transparent;}
 	height: 60px;
 	line-height: 60px;
 }
+#gnb .menu .level1>a[aria-selected="true"] span{background-color:white;color:black;border-top-right-radius:5px;border-top-left-radius:5px;}
+
 
 #gnb .menu .level2 {
 	display:none;
 	overflow: hidden;
 	position: absolute;
-	top: 100%;
+	top: 60px;
 	left: 0;
 	width: 100%;
 	padding:3rem 0;
@@ -200,17 +203,26 @@ button[type="button"].abtn_{border:0 none;background:transparent;}
 	margin: 0 auto;
 }
 
+#gnb .menu .level2 ul{position:relative;border-right:1px solid #ddd}
 #gnb .menu .level2 ul>li{display:inline-block;width:20%;vertical-align:top;}
+#gnb .menu .level2 ul>li:after{position:absolute;top:0;width:1px;height:100%;background:#ddd;content:'';}
 #gnb .menu .level2 a {
 	font-size: 1rem;
 }
 
-#gnb .menu .level2 dl{margin-top:3rem;}
+#gnb .menu .level2 dl{margin-top:3rem;padding:0 1rem;}
 #gnb .menu .level2 dl:first-child{margin-top:0;}
 #gnb .menu .level2 dl dt{margin-bottom:1rem;font-size:1.125rem;color:#111;font-weight:500;}
-#gnb .menu .level2 dl dt a{display:block;position:relative;padding-right:24px;font-size:1rem;color:#111;}
-#gnb .menu .level2 dl dt a:after{display:inline-block;width:8px;height:14px;margin:4px 0 0 8px;background-color:blue;vertical-align:top;content:'';}
+#gnb .menu .level2 dl dt a{display:block;position:relative;padding-right:24px;font-size:1.125rem;color:#111;}
+#gnb .menu .level2 dl dt a:after{display:inline-block;width:8px;height:14px;margin:7px 0 0 8px;background-color:blue;vertical-align:top;content:'';}
 #gnb .menu .level2 dl dd a{display:block;line-height:24px;padding:2px 4px;font-size:0.875rem;color:#7b7b7b;}
+
+#gnb .gnb_bottom{display:none;padding:2rem 0;border-top:1px solid #ddd;background-color:white;font-size:1rem;text-align:left;}
+#gnb .gnb_bottom dl{max-width:1200px;margin:0 auto;font-size:0;}
+#gnb .gnb_bottom dl dt{display:inline-block;margin-right:2rem;font-size:1rem;}
+#gnb .gnb_bottom dl dt+dd{margin-left:0;}
+#gnb .gnb_bottom dl dd{display:inline-block;margin-left:0.5rem;}
+#gnb .gnb_bottom dl dd a{display:block;line-height:2rem;padding:0 0.5rem;background-color:#7451c0;font-size:0.875rem;color:white;border-radius:50px;}
 
 #container{width:auto;}
 

@@ -18,11 +18,11 @@ var PC = (function (jx, $) {
 
 	jx.gnb = {
 		init: function () {
-			this.$gnbWrap = $('#gnb');
-			if (this.$gnbWrap.length === 0) {
+			this.$gnbMenu = $('#gnb');
+			if (this.$gnbMenu.length === 0) {
 				return;
 			}
-			this.$gnbWrap = $('#gnb');
+			this.$gnbMenu = $('#gnb');
 			this.$dimmed = $('.dimmed');
 
 			this.$totSearch = $('.search_menu');
@@ -32,7 +32,6 @@ var PC = (function (jx, $) {
 
 			this.$totMenu = $('.total_menu');
 			this.$btnTotMenu = this.$totMenu.find('>button');
-			this.$btnTotMenuText = this.$totMenu.find('>button span');
 			this.$totMenuBox = $('.total_menu .panel');
 
 			this._set();
@@ -74,14 +73,18 @@ var PC = (function (jx, $) {
 
 			var $gnbElWrap = $gnbEl.closest('li');
 			var $gnbElCont = $gnbElWrap.find('.level2');
-			var $gnbWrap = $gnbEl.closest('.menu');
+			var $gnbMenu = $gnbEl.closest('.menu');
+			var gnbHeight = $gnbEl.outerHeight() + $gnbElCont.outerHeight();
 
-			var isVisibleEl = $gnbWrap.find('>li >a').filter(function () {
+			var isVisibleEl = $gnbMenu.find('>li>a').filter(function () {
 				return ($(this).attr('aria-selected') === 'true');
 			});
 
+			//gnb 높이 지정
+			$gnbMenu.css('height', gnbHeight + 60);
+
 			//메뉴 선택
-			$gnbWrap.find('>li >a').attr('aria-selected', 'false');
+			$gnbMenu.find('>li>a').attr('aria-selected', 'false');
 			$gnbEl.attr('aria-selected', 'true');
 			$('#gnb').addClass('on');
 			$('#header').addClass('on');
@@ -89,14 +92,14 @@ var PC = (function (jx, $) {
 			//이전 메뉴 열려 있는 지 체크
 			if (this.$btnTotSearch.attr('aria-expanded') === "true") {
 				this.$btnTotSearch.attr('aria-expanded', 'false');
-				this.$btnTotSearch.text(this.$btnTotSearchText.text().replace('닫기', ''));
+				this.$btnTotSearch.find('span').text(this.$btnTotSearch.find('span').text().replace('닫기', ''));
 				this.$totSearchBox.removeAttr('style');
 				isVisibleEl = 1;
 			}
 
 			if (this.$btnTotMenu.attr('aria-expanded') === "true") {
 				this.$btnTotMenu.attr('aria-expanded', 'false');
-				this.$btnTotMenu.text(this.$btnTotMenuText.text().replace('닫기', ''));
+				this.$btnTotMenu.find('span').text(this.$btnTotMenu.find('span').text().replace('닫기', ''));
 				this.$totMenuBox.removeAttr('style');
 				isVisibleEl = 1;
 			}
@@ -106,19 +109,20 @@ var PC = (function (jx, $) {
 				$gnbElCont.hide();
 				$gnbElCont.stop().slideDown(300, 'easeOutCubic', function () {
 					$(this).removeAttr('style');
+					$('#gnb .gnb_bottom').show();
 				});
-				this.$dimmed.stop().fadeIn(300);
+				this.$dimmed.fadeIn(300);
 			}
 		},
 		_mouseleaveHideGnbDef: function () {
-
 			if ($('.level2:visible').length > 0) {
 				$('.level2:visible').show();
 				$('.level2:visible').closest('li.level1').find('>a').attr('aria-selected', 'false');
 				$('#gnb').removeClass('on');
+				$('#gnb .gnb_bottom').hide();
 				$('.level2:visible').stop().slideUp(300, 'easeOutCubic', function () {
 					$('#header').removeClass('on');
-					$(this).removeAttr('style');
+					$('#gnb .menu').removeAttr('style');
 					console.log('leave');
 				});
 			}
@@ -132,7 +136,7 @@ var PC = (function (jx, $) {
 			// }
 
 			if ($('.function .panel:visible').length === 0) {
-				this.$dimmed.stop().fadeOut(300);
+				this.$dimmed.fadeOut(300);
 			}
 
 		},
@@ -140,18 +144,17 @@ var PC = (function (jx, $) {
 			$('#gnb').removeClass('on');
 			if (this.$btnTotMenu.attr('aria-expanded') === "true") {
 				this.$btnTotMenu.attr('aria-expanded', 'false');
-				this.$btnTotMenu.text(this.$btnTotMenuText.text().replace('닫기', ''));
+				this.$btnTotMenu.find('span').text(this.$btnTotMenu.find('span').text().replace('닫기', ''));
 				this.$totMenuBox.stop().slideUp(300, 'easeOutCubic', function () {
 					$('#header').removeClass('on');
 				});
 				this.$dimmed.stop().fadeOut(300, function () {
 					$(this).removeAttr('style');
 				});
-
 			} else {
 				console.log('total menu box open');
 				this.$btnTotMenu.attr('aria-expanded', 'true');
-				this.$btnTotMenu.text(this.$btnTotMenuText.text() + '닫기');
+				this.$btnTotMenu.find('span').text(this.$btnTotMenu.find('span').text() + '닫기');
 				$('#header').addClass('on');
 				if ($('.level2:visible').length > 0) {
 					this.$totMenuBox.show();
@@ -161,7 +164,7 @@ var PC = (function (jx, $) {
 					this.$dimmed.show();
 				} else if (this.$btnTotSearch.attr('aria-expanded') === "true") {
 					this.$btnTotSearch.attr('aria-expanded', 'false');
-					this.$btnTotSearch.text(this.$btnTotSearchText.text().replace('닫기', ''));
+					this.$btnTotSearch.find('span').text(this.$btnTotSearch.find('span').text().replace('닫기', ''));
 					this.$totSearchBox.removeAttr('style');
 					this.$totMenuBox.show();
 				} else {
@@ -177,7 +180,7 @@ var PC = (function (jx, $) {
 			$('#gnb').removeClass('on');
 			if (this.$btnTotSearch.attr('aria-expanded') === "true") {
 				this.$btnTotSearch.attr('aria-expanded', 'false');
-				this.$btnTotSearch.text(this.$btnTotSearchText.text().replace('닫기', ''));
+				this.$btnTotSearch.find('span').text(this.$btnTotSearch.find('span').text().replace('닫기', ''));
 				this.$totSearchBox.stop().slideUp(300, 'easeOutCubic', function () {
 					$('#header').removeClass('on');
 				});
@@ -187,7 +190,7 @@ var PC = (function (jx, $) {
 			} else {
 				console.log('search box open');
 				this.$btnTotSearch.attr('aria-expanded', 'true');
-				this.$btnTotSearch.text(this.$btnTotSearchText.text() + '닫기');
+				this.$btnTotSearch.find('span').text(this.$btnTotSearch.find('span').text() + '닫기');
 				$('#header').addClass('on');
 				if ($('.level2:visible').length > 0) {
 					this.$totSearchBox.show();
@@ -197,7 +200,7 @@ var PC = (function (jx, $) {
 					this.$dimmed.show();
 				} else if (this.$btnTotMenu.attr('aria-expanded') === "true") {
 					this.$btnTotMenu.attr('aria-expanded', 'false');
-					this.$btnTotMenu.text(this.$btnTotMenuText.text().replace('닫기', ''));
+					this.$btnTotMenu.find('span').text(this.$btnTotMenu.find('span').text().replace('닫기', ''));
 					this.$totMenuBox.removeAttr('style');
 					this.$totSearchBox.show();
 				} else {
