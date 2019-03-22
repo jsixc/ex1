@@ -111,7 +111,7 @@ var PC = (function (jx, $) {
 					$(this).removeAttr('style');
 					$('#gnb .gnb_bottom').show();
 				});
-				this.$dimmed.fadeIn(300);
+				this.$dimmed.stop().fadeIn(300);
 			}
 		},
 		_mouseleaveHideGnbDef: function () {
@@ -136,7 +136,7 @@ var PC = (function (jx, $) {
 			// }
 
 			if ($('.function .panel:visible').length === 0) {
-				this.$dimmed.fadeOut(300);
+				this.$dimmed.stop().fadeOut(300);
 			}
 
 		},
