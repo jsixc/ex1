@@ -62,7 +62,7 @@ var PC = (function (jx, $) {
 			}
 		},
 		gnbOver: function (e) {
-			this.gnbSet();
+			// this.gnbSet();
 
 			var $gnbEl;
 			if (e.currentTarget === undefined) {
@@ -123,6 +123,7 @@ var PC = (function (jx, $) {
 				$('.level2:visible').stop().slideUp(300, 'easeOutCubic', function () {
 					$('#header').removeClass('on');
 					$('#gnb .menu').removeAttr('style');
+					$('#gnb .level2').removeAttr('style');
 					console.log('leave');
 				});
 			}
